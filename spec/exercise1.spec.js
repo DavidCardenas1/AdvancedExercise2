@@ -1,4 +1,5 @@
-const flatten = require('../exercise1/exercise1');
+// const flatten = require('../exercise1/exercise1');
+const flatten = require('../exercise1/exercise1Imperative');
 
 describe('exercise 1 ', () => {
   it('objecs and array inside old object', () => {
