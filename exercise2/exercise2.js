@@ -7,11 +7,13 @@
 function flattenArray(input) {
   const result = [];
   const deepSearch = (array) => {
-    array.map((value) => {
-            (Array.isArray(value)) ?
-                deepSearch(value) :
-                result.push(value);
-    });
+    array.forEach((value) => {
+        if (Array.isArray(value)) {
+          deepSearch(value);
+        } else {
+          result.push(value);
+        }
+      });
   };
   deepSearch(input);
   return result;
