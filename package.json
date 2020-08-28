@@ -1,0 +1,17 @@
+{
+  "name": "advancedexercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
+    "test": "./node_modules/jasmine/bin/jasmine.js init"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-google": "^0.14.0",
+    "jasmine": "^3.6.1"
+  }
+}
