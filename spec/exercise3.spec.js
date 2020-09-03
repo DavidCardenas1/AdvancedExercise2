@@ -6,9 +6,9 @@ describe('exercise 3 ', () => {
     expect(result).toEqual(['D', 'B', 'E', 'A', 'H', 'F', 'I', 'C', 'G', 'J']);
   });
   it('prefix with no childs and no right child', () => {
-    const bTree = '(A,(B,(D),(E)),(C,(F,(H),(I)),(G,,(J))))';
+    const bTree = '(Aa,(B,(D),(E)),(C,(F,(H),(I)),(G,,(J))))';
     const result = printTree(bTree, 'prefix');
-    expect(result).toEqual(['A', 'B', 'D', 'E', 'C', 'F', 'H', 'I', 'G', 'J']);
+    expect(result).toEqual(['Aa', 'B', 'D', 'E', 'C', 'F', 'H', 'I', 'G', 'J']);
   });
   it('postfix with no childs and no right child', () => {
     const bTree = '(A,(B,(D),(E)),(C,(F,(H),(I)),(G,,(J))))';
@@ -21,9 +21,24 @@ describe('exercise 3 ', () => {
     expect(result).toEqual(['B', 'E', 'A', 'F', 'I', 'C', 'G', 'J']);
   });
   it('infix with no right child', () => {
-    const bTree = '(A,(B,(D),),(C,(F,(H),),)';
+    const bTree = '(A,(B,(D),),(C,(F,(H),),))';
     const result = printTree(bTree);
     expect(result).toEqual(['D', 'B', 'A', 'H', 'F', 'C']);
+  });
+  it('sintax error outside', () => {
+    const bTree = '(A,(B),(c),)';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
+  it('sintax error inside', () => {
+    const bTree = '(Aaa,(B,(Dd),,),(C,(F,(H),),))';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
+  it('infix multiple char lenght with no right child', () => {
+    const bTree = '(Aaa,(B,(Dd),),(C,(F,(H),),))';
+    const result = printTree(bTree);
+    expect(result).toEqual(['Dd', 'B', 'Aaa', 'H', 'F', 'C']);
   });
 });
 /** Tree:
@@ -31,8 +46,8 @@ describe('exercise 3 ', () => {
 *            /   \
 *           B     C
 *         /  \   /  \
-*        D      F    
+*        D      F
 *              / \    \
-*             H       
+*             H
 'infix' (default) | 'prefix' | 'postfix'
 */

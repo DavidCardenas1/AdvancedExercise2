@@ -3,9 +3,9 @@
  */
 class Node {
   /**
-     *
-     * @param {String} data
-     */
+       *
+       * @param {String} data
+       */
   constructor(data) {
     this.data = data;
     this.left = null;
@@ -17,19 +17,19 @@ class Node {
  */
 class BinaryTree {
   /**
-     * result save order infix,prefix,postfix
-     */
+       * result save order infix,prefix,postfix
+       */
   constructor() {
     this.root = null;
-    this.result= [];
+    this.result = [];
   }
   /**
-   *
-   * @param {String} data
-   * @param {String} direction
-   * @param {Node} currentNode
-   * @return {Node} to keep sequence
-   */
+     *
+     * @param {String} data
+     * @param {String} direction
+     * @param {Node} currentNode
+     * @return {Node} to keep sequence
+     */
   insert(data, direction, currentNode) {
     const newNode = new Node(data);
     if (this.root === null) {
@@ -44,11 +44,11 @@ class BinaryTree {
     }
   }
   /**
-   *
-   * @param {Node} node current Node
-   * @param {Node} newNode new Node
-   * @return {Node} return new current Node
-   */
+     *
+     * @param {Node} node current Node
+     * @param {Node} newNode new Node
+     * @return {Node} return new current Node
+     */
   insertNodeLeft(node, newNode) {
     if (node.left) {
       this.insertNodeLeft(node.left, newNode);
@@ -58,11 +58,11 @@ class BinaryTree {
     }
   }
   /**
-   *
-   * @param {Node} node current Node
-   * @param {Node} newNode new Node
-   * @return {Node} return new current Node
-   */
+     *
+     * @param {Node} node current Node
+     * @param {Node} newNode new Node
+     * @return {Node} return new current Node
+     */
   insertNodeRight(node, newNode) {
     if (node.right) {
       this.insertNodeRight(node.right, newNode);
@@ -73,9 +73,9 @@ class BinaryTree {
     }
   }
   /**
- *
- * @param {Node} node
- */
+   *
+   * @param {Node} node
+   */
   inorder(node) {
     if (node !== null) {
       this.inorder(node.left);
@@ -84,9 +84,9 @@ class BinaryTree {
     }
   }
   /**
- *
- * @param {Node} node
- */
+   *
+   * @param {Node} node
+   */
   preorder(node) {
     if (node !== null) {
       this.result.push(node.data);
@@ -95,9 +95,9 @@ class BinaryTree {
     }
   }
   /**
- *
- * @param {Node} node
- */
+   *
+   * @param {Node} node
+   */
   postorder(node) {
     if (node !== null) {
       this.postorder(node.left);
@@ -116,8 +116,8 @@ class BinaryTree {
 *              / \    \
 *             H   I    J
 */
-const bTree = '(A,(B,(D),(E)),(C,(F,(H),(I)),(G,,(J))))'; /**
-
+const bTree = '(Aa,(B,(Dd),),(C,(F,(H),(I)),(G,,(J))),)';
+/**
 ///A
 //B,(D,E)
 * (VAL, LN, RN)
@@ -130,15 +130,17 @@ const bTree = '(A,(B,(D),(E)),(C,(F,(H),(I)),(G,,(J))))'; /**
 * @param {String} order  'infix' (default) | 'prefix' | 'postfix'
 * @return {Array} result
 */
-function printTree(tree, order='infix') {
+function printTree(tree, order = 'infix') {
   const binTree = new BinaryTree();
   const currentNode = binTree.root;
+  let messageError;
 
   const builtTree = (string, direction, current) => {
-    const {parent, left, right} = getParentLeftRight(string);
+    const {parent, left, right, error} = getParentLeftRight(string);
 
-    if (!parent) {
-      return;
+    if (error) {
+      messageError=error;
+      return error;
     }
     current = binTree.insert(parent, direction, current);
     if (left) {
@@ -152,13 +154,16 @@ function printTree(tree, order='infix') {
   };
 
   builtTree(tree, 'root', currentNode);
-  if (order==='infix') {
+  if (messageError) {
+    return messageError;
+  }
+  if (order === 'infix') {
     binTree.inorder(binTree.root);
   }
-  if (order==='prefix') {
+  if (order === 'prefix') {
     binTree.preorder(binTree.root);
   }
-  if (order==='postfix') {
+  if (order === 'postfix') {
     binTree.postorder(binTree.root);
   }
   // console.log(binTree.result);
@@ -171,10 +176,18 @@ function printTree(tree, order='infix') {
  */
 function getParentLeftRight(string) {
   string = string.substring(1, string.length - 1);
-  const parent = string[0];
-  const start = 2;
-  let left; let right;
+  const idxComa = string.indexOf(',');
+  let parent; let left; let right;
+  const start = 0;
   let countParentheses = 0;
+  if (idxComa > 0) {
+    parent = string.slice(0, idxComa);
+    string = string.substring(idxComa + 1, string.length);
+  } else {
+    parent = string;
+    return {parent, left, right};
+  }
+
   for (let idx = start; idx < string.length; idx++) {
     const charValue = string[idx];
     if (charValue === '(') {
@@ -191,12 +204,14 @@ function getParentLeftRight(string) {
         left = undefined;
         right = string.substring(idx + 1, string.length);
       }
+      if (right[right.length-1]!=undefined&&right[right.length-1]!=')') {
+        return {error: 'sintax error'};
+      }
       break;
     }
   }
-  // console.log(right);
-  return {parent, left, right};
+  return {parent, left, right, error: null};
 }
 printTree(bTree, 'infix');
 
-module.exports=printTree;
+module.exports = printTree;
