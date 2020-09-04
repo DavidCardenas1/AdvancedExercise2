@@ -186,17 +186,11 @@ function getParentLeftRight(string) {
   let countParentheses = 0;
   if (idxComa >= 0) {
     parent = string.slice(0, idxComa, string);
-    if (idxComa === 0) {
-      string = string.substring(idxComa + 1, string.length);
-    } else {
-      string = string.substring(idxComa + 1, string.length);
-    }
+    string = string.substring(idxComa + 1, string.length);
   } else {
     parent = string;
     return {parent, left, right};
   }
-  // console.log(parent,idxComa,string,string.length);
-
   for (let idx = start; idx < string.length; idx++) {
     const charValue = string[idx];
     if (charValue === '(') {
@@ -210,7 +204,7 @@ function getParentLeftRight(string) {
       left = string.substring(start, idx + 1);
       right = string.substring(idx + 2, string.length);
       if (left === ',') {
-        left = '';
+        left = undefined;
         right = string.substring(idx + 1, string.length);
       }
       if (right[right.length - 1] != undefined &&
