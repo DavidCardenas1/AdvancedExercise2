@@ -30,15 +30,40 @@ describe('exercise 3 ', () => {
     const result = printTree(bTree);
     expect(result).toEqual('sintax error');
   });
+  it('sintax error outside', () => {
+    const bTree = '(A,,,)';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
   it('sintax error inside', () => {
     const bTree = '(Aaa,(B,(Dd),,),(C,(F,(H),),))';
     const result = printTree(bTree);
     expect(result).toEqual('sintax error');
   });
+  it('only one Value', () => {
+    const bTree = '(,(B),)';
+    const result = printTree(bTree);
+    expect(result).toEqual(['B','']);
+  });
+  it('only one Value', () => {
+    const bTree = '(,,(B))';
+    const result = printTree(bTree);
+    expect(result).toEqual(['','B']);
+  });
+  it('No Values', () => {
+    const bTree = '(,,)';
+    const result = printTree(bTree);
+    expect(result).toEqual(['']);
+  });
   it('infix multiple char lenght with no right child', () => {
     const bTree = '(Aaa,(B,(Dd),),(C,(F,(H),),))';
     const result = printTree(bTree);
     expect(result).toEqual(['Dd', 'B', 'Aaa', 'H', 'F', 'C']);
+  });
+  it('infix multiple char lenght with no right childs', () => {
+    const bTree = '(Aaa,(,(),()),(C,(F,(H),),))';
+    const result = printTree(bTree);
+    expect(result).toEqual(['', '','', 'Aaa', 'H', 'F', 'C']);
   });
 });
 /** Tree:

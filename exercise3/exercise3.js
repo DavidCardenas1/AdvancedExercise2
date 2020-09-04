@@ -116,7 +116,10 @@ class BinaryTree {
 *              / \    \
 *             H   I    J
 */
-const bTree = '(Aa,(B,(Dd),),(C,(F,(H),(I)),(G,,(J))),)';
+//   const bTree = '(Aa,(B,,(Dd)),(C,(F,(H),(I)),(G,,(J))))';
+// const bTree = '(,(A),)';
+// const bTree = '(,,(d))'
+const bTree = '(,(,,,),)';
 /**
 ///A
 //B,(D,E)
@@ -139,7 +142,7 @@ function printTree(tree, order = 'infix') {
     const {parent, left, right, error} = getParentLeftRight(string);
 
     if (error) {
-      messageError=error;
+      messageError = error;
       return error;
     }
     current = binTree.insert(parent, direction, current);
@@ -155,6 +158,7 @@ function printTree(tree, order = 'infix') {
 
   builtTree(tree, 'root', currentNode);
   if (messageError) {
+    // console.log(messageError);
     return messageError;
   }
   if (order === 'infix') {
@@ -180,13 +184,18 @@ function getParentLeftRight(string) {
   let parent; let left; let right;
   const start = 0;
   let countParentheses = 0;
-  if (idxComa > 0) {
-    parent = string.slice(0, idxComa);
-    string = string.substring(idxComa + 1, string.length);
+  if (idxComa >= 0) {
+    parent = string.slice(0, idxComa, string);
+    if (idxComa === 0) {
+      string = string.substring(idxComa + 1, string.length);
+    } else {
+      string = string.substring(idxComa + 1, string.length);
+    }
   } else {
     parent = string;
     return {parent, left, right};
   }
+  // console.log(parent,idxComa,string,string.length);
 
   for (let idx = start; idx < string.length; idx++) {
     const charValue = string[idx];
@@ -201,17 +210,20 @@ function getParentLeftRight(string) {
       left = string.substring(start, idx + 1);
       right = string.substring(idx + 2, string.length);
       if (left === ',') {
-        left = undefined;
+        left = '';
         right = string.substring(idx + 1, string.length);
       }
-      if (right[right.length-1]!=undefined&&right[right.length-1]!=')') {
+      if (right[right.length - 1] != undefined &&
+        right[right.length - 1] != ')') {
         return {error: 'sintax error'};
       }
       break;
     }
   }
+
   return {parent, left, right, error: null};
 }
 printTree(bTree, 'infix');
+
 
 module.exports = printTree;
