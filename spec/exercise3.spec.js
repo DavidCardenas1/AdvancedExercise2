@@ -43,12 +43,12 @@ describe('exercise 3 ', () => {
   it('only one Value', () => {
     const bTree = '(,(B),)';
     const result = printTree(bTree);
-    expect(result).toEqual(['B','']);
+    expect(result).toEqual(['B', '']);
   });
   it('only one Value', () => {
     const bTree = '(,,(B))';
     const result = printTree(bTree);
-    expect(result).toEqual(['','B']);
+    expect(result).toEqual(['', 'B']);
   });
   it('No Values', () => {
     const bTree = '(,,)';
@@ -63,7 +63,7 @@ describe('exercise 3 ', () => {
   it('infix multiple char lenght with no right childs', () => {
     const bTree = '(Aaa,(,(),()),(C,(F,(H),),))';
     const result = printTree(bTree);
-    expect(result).toEqual(['', '','', 'Aaa', 'H', 'F', 'C']);
+    expect(result).toEqual(['', '', '', 'Aaa', 'H', 'F', 'C']);
   });
 });
 /** Tree:
