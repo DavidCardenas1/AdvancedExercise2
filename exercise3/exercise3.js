@@ -119,7 +119,7 @@ class BinaryTree {
 //   const bTree = '(Aa,(B,,(Dd)),(C,(F,(H),(I)),(G,,(J))))';
 // const bTree = '(,(A),)';
 // const bTree = '(,,(d))'
-const bTree = '(,(,,,),)';
+const bTree = '((,))';
 /**
 ///A
 //B,(D,E)
@@ -179,16 +179,27 @@ function printTree(tree, order = 'infix') {
  * @return {Object} nodeParent and childs left rigth
  */
 function getParentLeftRight(string) {
+  if (string[0]!='(') {
+    return {error: 'sintax error'};
+  }
   string = string.substring(1, string.length - 1);
+ 
   const idxComa = string.indexOf(',');
   let parent; let left; let right;
   const start = 0;
   let countParentheses = 0;
   if (idxComa >= 0) {
     parent = string.slice(0, idxComa, string);
+    if (parent.includes('(')) {
+      return {error: 'sintax error'};
+    }
     string = string.substring(idxComa + 1, string.length);
   } else {
+    
     parent = string;
+    if (parent.includes('(')) {
+      return {error: 'sintax error'};
+    }
     return {parent, left, right};
   }
   for (let idx = start; idx < string.length; idx++) {

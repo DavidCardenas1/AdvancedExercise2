@@ -40,6 +40,21 @@ describe('exercise 3 ', () => {
     const result = printTree(bTree);
     expect(result).toEqual('sintax error');
   });
+  it('sintax error no parentheses', () => {
+    const bTree = 'a';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
+  it('sintax error extra parentheses', () => {
+    const bTree = '(())';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
+  it('sintax error extra parentheses with comma', () => {
+    const bTree = '((,))';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
   it('only one Value', () => {
     const bTree = '(,(B),)';
     const result = printTree(bTree);
