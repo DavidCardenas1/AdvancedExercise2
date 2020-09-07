@@ -119,7 +119,7 @@ class BinaryTree {
 //   const bTree = '(Aa,(B,,(Dd)),(C,(F,(H),(I)),(G,,(J))))';
 // const bTree = '(,(A),)';
 // const bTree = '(,,(d))'
-const bTree = '(a(,))';
+// const bTree = '(a(,))';
 /**
 ///A
 //B,(D,E)
@@ -158,8 +158,9 @@ function printTree(tree, order = 'infix') {
 
   builtTree(tree, 'root', currentNode);
   if (messageError) {
-    console.log(messageError);
-    return messageError;
+    // console.log(messageError);
+    throw new Error(messageError);
+    // return messageError;
   }
   if (order === 'infix') {
     binTree.inorder(binTree.root);
@@ -170,7 +171,7 @@ function printTree(tree, order = 'infix') {
   if (order === 'postfix') {
     binTree.postorder(binTree.root);
   }
-  console.log(binTree.result);
+  // console.log(binTree.result);
   return binTree.result;
 }
 /**
@@ -229,7 +230,7 @@ function getParentLeftRight(string) {
     return {parent, left, right, error: null};
   } else return {error: 'sintax error'};
 }
-printTree(bTree, 'infix');
+// printTree(bTree, 'infix');
 
 
 module.exports = printTree;

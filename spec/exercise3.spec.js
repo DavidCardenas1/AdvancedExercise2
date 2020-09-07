@@ -27,38 +27,54 @@ describe('exercise 3 ', () => {
   });
   it('sintax error outside', () => {
     const bTree = '(A,(B),(c),)';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+    // const result = printTree(bTree);
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
+    // expect(result).toEqual('sintax error');
   });
   it('sintax error outside', () => {
     const bTree = '(A,,,)';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+    // const result = printTree(bTree);
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
+    // expect(result).toEqual('sintax error');
   });
   it('sintax error inside', () => {
     const bTree = '(Aaa,(B,(Dd),,),(C,(F,(H),),))';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
   });
   it('sintax error no parentheses', () => {
     const bTree = 'a';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
   });
   it('sintax error extra parentheses', () => {
     const bTree = '(())';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
   });
   it('sintax error extra parentheses with comma', () => {
     const bTree = '((,))';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
   });
   it('sintax error NO CLOSING', () => {
     const bTree = '(,))';
-    const result = printTree(bTree);
-    expect(result).toEqual('sintax error');
+
+    expect( function() {
+      printTree(bTree);
+    } ).toThrow(new Error('sintax error'));
   });
   it('only one Value', () => {
     const bTree = '(,(B),)';
