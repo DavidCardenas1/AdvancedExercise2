@@ -55,6 +55,11 @@ describe('exercise 3 ', () => {
     const result = printTree(bTree);
     expect(result).toEqual('sintax error');
   });
+  it('sintax error NO CLOSING', () => {
+    const bTree = '(,))';
+    const result = printTree(bTree);
+    expect(result).toEqual('sintax error');
+  });
   it('only one Value', () => {
     const bTree = '(,(B),)';
     const result = printTree(bTree);

@@ -119,7 +119,7 @@ class BinaryTree {
 //   const bTree = '(Aa,(B,,(Dd)),(C,(F,(H),(I)),(G,,(J))))';
 // const bTree = '(,(A),)';
 // const bTree = '(,,(d))'
-const bTree = '((,))';
+const bTree = '(a(,))';
 /**
 ///A
 //B,(D,E)
@@ -158,7 +158,7 @@ function printTree(tree, order = 'infix') {
 
   builtTree(tree, 'root', currentNode);
   if (messageError) {
-    // console.log(messageError);
+    console.log(messageError);
     return messageError;
   }
   if (order === 'infix') {
@@ -170,7 +170,7 @@ function printTree(tree, order = 'infix') {
   if (order === 'postfix') {
     binTree.postorder(binTree.root);
   }
-  // console.log(binTree.result);
+  console.log(binTree.result);
   return binTree.result;
 }
 /**
@@ -179,25 +179,25 @@ function printTree(tree, order = 'infix') {
  * @return {Object} nodeParent and childs left rigth
  */
 function getParentLeftRight(string) {
-  if (string[0]!='(') {
+  if (string[0] != '(' || string[string.length - 1] != ')') {
     return {error: 'sintax error'};
   }
   string = string.substring(1, string.length - 1);
- 
+
   const idxComa = string.indexOf(',');
   let parent; let left; let right;
   const start = 0;
   let countParentheses = 0;
   if (idxComa >= 0) {
     parent = string.slice(0, idxComa, string);
-    if (parent.includes('(')) {
+
+    if (parent.includes('(') || parent.includes(')')) {
       return {error: 'sintax error'};
     }
     string = string.substring(idxComa + 1, string.length);
   } else {
-    
     parent = string;
-    if (parent.includes('(')) {
+    if (parent.includes('(') || parent.includes(')')) {
       return {error: 'sintax error'};
     }
     return {parent, left, right};
@@ -225,8 +225,9 @@ function getParentLeftRight(string) {
       break;
     }
   }
-
-  return {parent, left, right, error: null};
+  if (countParentheses === 0) {
+    return {parent, left, right, error: null};
+  } else return {error: 'sintax error'};
 }
 printTree(bTree, 'infix');
 
