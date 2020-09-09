@@ -6,18 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 4</title>
     <script src="./exercise4.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine-html.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/boot.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.js"></script>
 </head>
 
 <body>
     <section>
-        <div id="1" class="note"><input type="checkbox" class="is-complete" checked> </div>
+        <div id="1" class="note"><p class="child" >
+            <a> <span class="some_class">yes</span> </a></p></div>
         <div id="2" class="note"></div>
         <div id="3" class="note"><input type="checkbox" class="is-complete" checked></div>
         <div id="4" class="note"></div>
         <div id="5" class="note"><input type="checkbox" class="is-complete" checked></div>
     </section>
+    <section>
+        <div>
+            <span class="child"></span>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="../spec//exercise4.spec.js"></script>
     <script>
-       querySelectorAll("div.note < input.is-complete[checked]")
+        //    querySelectorAll("div.note < input.is-complete[checked]")
+        // querySelectorAll("div.note < input.is-complete[checked]")
+        // querySelectorAll(".note < .child a span.some_class")
     </script>
 </body>
 
