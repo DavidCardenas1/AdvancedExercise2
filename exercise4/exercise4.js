@@ -5,50 +5,30 @@
  */
 function querySelectorAll(query) {
   const result = [];
-  let nodeParent; let classIdName = null; let classOrId=false;
   const parentChilds = query.split('<');
-  let parent = parentChilds[0].trim().split(' ');
-  parent = parent[0];
-  for (let idx = 0; idx < parent.length; idx++) {
-    const char = parent[idx];
-    if (char === '.' || char === '#') {
-      classOrId=true;
-      nodeParent = parent.slice(0, idx);
-      classIdName = parent.slice(idx + 1, parent.length);
-      break;
-    }
-  }
-  if (!classOrId) {
-    nodeParent=parent;
-  }
   query = query.replace('<', '>');
-  // console.log(query,nodeParent);
-  const getParent = function(child) {
-    if (nodeParent.toUpperCase() === child.parentNode.tagName) {
-      if (classIdName) {
-        if (child.parentNode.id === classIdName ||
-            child.parentNode.className === classIdName) {
-          return child.parentNode;
-        }
-      } else {
-        return child.parentNode;
-      }
-    } else {
-      if (!nodeParent) {
-        if (child.parentNode.id === classIdName ||
-            child.parentNode.className === classIdName) {
-          return child.parentNode;
-        }
+  const inCollection = function(all, current) {
+    for (let i = 0; i < all.length; i++) {
+      if (all[i] == current) {
+        return true;
       }
     }
-    return getParent(child.parentNode);
+    return false;
   };
-
-  const preResult = document.querySelectorAll(query);
-  // console.log(preResult );
-  preResult.forEach((element) => {
-    result.push(getParent(element).outerHTML);
+  const findRootParent = function(elm, selector) {
+    const all = document.querySelectorAll(selector);
+    let curent = elm;
+    while (curent && !inCollection(all, curent)) {
+      curent = curent.parentNode;
+    }
+    return curent;
+  };
+  document.querySelectorAll(query).forEach((element) => {
+    result.push(findRootParent(element, parentChilds[0]).outerHTML);
   });
-  // console.log(result);
+
+//   console.log(result);
   return result;
 }
+
+
