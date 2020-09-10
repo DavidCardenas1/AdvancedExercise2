@@ -7,27 +7,24 @@ function querySelectorAll(query) {
   const result = [];
   const parentChilds = query.split('<');
   query = query.replace('<', '>');
-  const inCollection = function(all, current) {
-    for (let i = 0; i < all.length; i++) {
-      if (all[i] == current) {
-        return true;
-      }
-    }
-    return false;
-  };
   const findRootParent = function(elm, selector) {
-    const all = document.querySelectorAll(selector);
-    let curent = elm;
-    while (curent && !inCollection(all, curent)) {
-      curent = curent.parentNode;
+    elm.querySelectorAll(selector).forEach((current) => {
+      while (current && (elm !== current)) {
+        current = current.parentNode;
+      }
+      if (current) {
+        result.push(current);
+      }
+    });
+    if (!selector) {
+      result.push(elm);
     }
-    return curent;
   };
-  document.querySelectorAll(query).forEach((element) => {
-    result.push(findRootParent(element, parentChilds[0]).outerHTML);
-  });
 
-//   console.log(result);
+  document.querySelectorAll(parentChilds[0]).forEach((element) => {
+    findRootParent(element, parentChilds[1]);
+  });
+  // console.log(result);
   return result;
 }
 
