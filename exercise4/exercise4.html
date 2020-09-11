@@ -25,6 +25,11 @@
     <section>
         <div><span id="child" class="child"></span></div>
     </section>
+    <div class="notes">
+        <span class="special">ABC</span>
+        <span class="special">123</span>
+        <span class="specials">123</span>
+    </div>
 
     <script type="text/javascript" src="../spec//exercise4.spec.js"></script>
     <script>
@@ -32,6 +37,7 @@
         // querySelectorAll("div.note < input.is-complete[checked]")
         // querySelectorAll(".note < .child a span.some_class")
         // querySelectorAll("#child")
+        querySelectorAll('div.notes < span.special')
     </script>
 </body>
 
