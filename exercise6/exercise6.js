@@ -7,37 +7,37 @@ isSameLevel(tree,1,1)
 // const tree = {
 //   root: {
 //     data: 0,
-//     childs: [
+//     children: [
 //       {
 //         data: 1,
-//         childs: [],
+//         children: [],
 //       },
 //       {
 //         data: 2,
-//         childs: [
+//         children: [
 //           {
 //             data: 1,
-//             childs: [],
+//             children: [],
 //           },
 //           {
 //             data: 5,
-//             childs: [
+//             children: [
 //               {
 //                 data: 3,
-//                 childs: [],
+//                 children: [],
 //               },
 //               {
 //                 data: 5,
-//                 childs: [
+//                 children: [
 //                   {
 //                     data: 6,
-//                     childs: [],
+//                     children: [],
 //                   },
 //                 ],
 //               },
 //               {
 //                 data: 9,
-//                 childs: [],
+//                 children: [],
 //               },
 //             ],
 
@@ -46,37 +46,37 @@ isSameLevel(tree,1,1)
 //       },
 //       {
 //         data: 3,
-//         childs: [
+//         children: [
 //           {
 //             data: 0,
-//             childs: [],
+//             children: [],
 //           },
 //         ],
 //       },
 //       {
 //         data: 5,
-//         childs: [],
+//         children: [],
 //       },
 //       {
 //         data: 7,
-//         childs: [
+//         children: [
 //           {
 //             data: 3,
-//             childs: [
+//             children: [
 //               {
 //                 data: 3,
-//                 childs: [],
+//                 children: [],
 //               },
 //               {
 //                 data: 0,
-//                 childs: [
+//                 children: [
 //                   {
 //                     data: 9,
-//                     childs: [],
+//                     children: [],
 //                   },
 //                   {
 //                     data: 4,
-//                     childs: [],
+//                     children: [],
 //                   },
 //                 ],
 //               },
@@ -119,6 +119,9 @@ function check(array, n1, n2) {
  * @return {boolean}
  */
 function isSameLevel(tree, n1, n2) {
+  if (tree.root === null) {
+    return false;
+  }
   const queue = [];
   let levelValues = [];
   queue.push(tree.root);
@@ -134,17 +137,17 @@ function isSameLevel(tree, n1, n2) {
       // / clear level
       levelValues = [];
     } else {
-      point.childs.forEach((element) => {
+      point.children.forEach((element) => {
         queue.push(element);
       });
       levelValues.push(point.data);
     }
   }
-  //   console.log(levelValues);
+
   // check last level
   if (check(levelValues, n1, n2)) {
-    return false;
+    return true;
   } else return false;
 }
-module.exports=isSameLevel;
-// console.log(isSameLevel(tree, 3, 3))
+module.exports = isSameLevel;
+// console.log(isSameLevel(tree, 6, 9))

@@ -3,37 +3,37 @@ describe('exercise 6', function() {
   const tree = {
     root: {
       data: 0,
-      childs: [
+      children: [
         {
           data: 1,
-          childs: [],
+          children: [],
         },
         {
           data: 2,
-          childs: [
+          children: [
             {
               data: 1,
-              childs: [],
+              children: [],
             },
             {
               data: 5,
-              childs: [
+              children: [
                 {
                   data: 3,
-                  childs: [],
+                  children: [],
                 },
                 {
                   data: 5,
-                  childs: [
+                  children: [
                     {
                       data: 6,
-                      childs: [],
+                      children: [],
                     },
                   ],
                 },
                 {
                   data: 9,
-                  childs: [],
+                  children: [],
                 },
               ],
 
@@ -42,37 +42,37 @@ describe('exercise 6', function() {
         },
         {
           data: 3,
-          childs: [
+          children: [
             {
               data: 0,
-              childs: [],
+              children: [],
             },
           ],
         },
         {
           data: 5,
-          childs: [],
+          children: [],
         },
         {
           data: 7,
-          childs: [
+          children: [
             {
               data: 3,
-              childs: [
+              children: [
                 {
                   data: 3,
-                  childs: [],
+                  children: [],
                 },
                 {
                   data: 0,
-                  childs: [
+                  children: [
                     {
                       data: 9,
-                      childs: [],
+                      children: [],
                     },
                     {
                       data: 4,
-                      childs: [],
+                      children: [],
                     },
                   ],
                 },
@@ -98,5 +98,20 @@ describe('exercise 6', function() {
   it('not same level different number false', function() {
     const result = isSameLevel(tree, 9, 1);
     expect(result).toBe(false);
+  });
+  it('root null false', function() {
+    const tree2 = {
+      root: null,
+    };
+    const result = isSameLevel(tree2, 9, 1);
+    expect(result).toBe(false);
+  });
+  it('numbers same as root  false', function() {
+    const result = isSameLevel(tree, 0, 0);
+    expect(result).toBe(false);
+  });
+  it('last layer', function() {
+    const result = isSameLevel(tree, 6, 9);
+    expect(result).toBe(true);
   });
 });
