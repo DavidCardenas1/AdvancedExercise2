@@ -102,12 +102,16 @@ function check(array, n1, n2) {
     }
     if (n1 === element) {
       n1 = null;
+
       continue;
     }
     if (n2 === element) {
       n2 = null;
       continue;
     }
+  }
+  if (n1 === null && n2 === null) {
+    return true;
   }
   return false;
 }
@@ -133,7 +137,6 @@ function isSameLevel(tree, n1, n2) {
       if (check(levelValues, n1, n2)) {
         return true;
       }
-      //   console.log(levelValues);
       // / clear level
       levelValues = [];
     } else {
@@ -149,5 +152,6 @@ function isSameLevel(tree, n1, n2) {
     return true;
   } else return false;
 }
+
 module.exports = isSameLevel;
-// console.log(isSameLevel(tree, 6, 9))
+// console.log(isSameLevel(tree, 1, 1))

@@ -114,4 +114,23 @@ describe('exercise 6', function() {
     const result = isSameLevel(tree, 6, 9);
     expect(result).toBe(true);
   });
+  it('one  layer same True', function() {
+    const tree2 = {
+      root: {
+        data: 0,
+        children: [
+          {
+            data: 1,
+            children: [],
+          },
+          {
+            data: 1,
+            children: [],
+          },
+        ],
+      },
+    };
+    const result = isSameLevel(tree2, 1, 1);
+    expect(result).toBe(true);
+  });
 });
