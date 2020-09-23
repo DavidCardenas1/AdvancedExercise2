@@ -1,6 +1,6 @@
 const largestArea = require('../exercise7/exercise7');
 describe('exercise 7', function() {
-  it('Histogram  mayor area in a column ', function() {
+  it('Histogram  mayor area in 1 column ', function() {
     bin = [
       [1, 1, 0, 0, 0],
       [1, 1, 0, 0, 0],
@@ -11,7 +11,7 @@ describe('exercise 7', function() {
     const result=largestArea(bin);
     expect(result).toBe(5);
   });
-  it('Histogram  mayor area in  columns ', function() {
+  it('Histogram  mayor area in 2 columns ', function() {
     bin = [
       [1, 1, 1, 0, 0],
       [1, 1, 1, 0, 0],
@@ -22,7 +22,7 @@ describe('exercise 7', function() {
     const result=largestArea(bin);
     expect(result).toBe(10);
   });
-  it('Histogram  mayor area in a row ', function() {
+  it('Histogram  mayor area in 1 row ', function() {
     bin = [
       [1, 1, 0, 0, 0],
       [1, 1, 0, 0, 0],
@@ -33,7 +33,7 @@ describe('exercise 7', function() {
     const result=largestArea(bin);
     expect(result).toBe(5);
   });
-  it('Histogram  mayor area in  rows ', function() {
+  it('Histogram  mayor area in  2 rows ', function() {
     bin = [
       [1, 1, 0, 0, 0],
       [1, 1, 0, 0, 0],
@@ -55,30 +55,16 @@ describe('exercise 7', function() {
     const result=largestArea(bin);
     expect(result).toBe(1);
   });
-  it('Histogram  seperate by 0 ', function() {
+  it('Histogram  all 0', function() {
     bin = [
-      [1, 0, 0, 0, 0],
-      [1, 1, 1, 1, 1],
-      [1, 1, 0, 1, 1],
-      [1, 1, 1, 1, 1],
-      [1, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
     ];
     const result=largestArea(bin);
-    expect(result).toBe(8);
+    expect(result).toBe(0);
   });
-  it('Histogram  differents areas  ', function() {
-    const binMatrix = [
-      [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-      [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-    ];
-    const result=largestArea(binMatrix);
-    expect(result).toBe(22);
-  });
+
 });
