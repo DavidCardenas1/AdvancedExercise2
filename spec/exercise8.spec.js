@@ -1,6 +1,11 @@
 const balanceSum = require('../exercise8/exercise8');
 describe('exercise 8', function() {
   it('one value array', function() {
+    const arr = [1];
+    const result = balanceSum(arr);
+    expect(result).toBe(-1);
+  });
+  it('two value array', function() {
     const arr = [1, 1];
     const result = balanceSum(arr);
     expect(result).toBe(0);
