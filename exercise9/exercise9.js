@@ -59,17 +59,16 @@ class LinkedList {
    * @return {Node} The node that init the bucle
    */
   checkLoops() {
-    let hash=new Map()
-    let curr = this.head;
-   while(curr!=null){
-     if(hash.has(curr)){
-       return curr
-     }else{
-       hash.set(curr)
-       curr=curr.next
-     }
-   }
-   return null
+    let fast = this.head;
+    let slow=this.head;
+    while (fast && slow && fast.next) {
+      slow=slow.next;
+      fast=fast.next.next;
+      if (slow===fast) {
+        return slow;
+      }
+    }
+    return null;
   }
   /**
    *
