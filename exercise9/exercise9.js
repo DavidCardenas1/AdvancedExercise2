@@ -20,7 +20,7 @@ class LinkedList {
      */
   constructor() {
     this.head = null;
-    this.size = 0;
+    // this.size = 0;
   }
   /**
    * to add a existing Node
@@ -53,16 +53,23 @@ class LinkedList {
       }
       current.next = newNode;
     }
-    this.size++;
+    // this.size++;
   }
   /**
    * @return {Node} The node that init the bucle
    */
   checkLoops() {
-    const lastPosition = this.getInPosition(this.size);
-    if (lastPosition) {
-      return lastPosition.next;
-    } else return null;
+    let hash=new Map()
+    let curr = this.head;
+   while(curr!=null){
+     if(hash.has(curr)){
+       return curr
+     }else{
+       hash.set(curr)
+       curr=curr.next
+     }
+   }
+   return null
   }
   /**
    *

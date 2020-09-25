@@ -16,13 +16,24 @@ describe('exercise 9', function() {
       element: 0,
     }));
   });
-  it('loop in the second element', function() {
+  it('loop in the third element', function() {
     linkList.add(0);
     linkList.add(1);
+    linkList.add(2);
+    linkList.addNode(linkList.getInPosition(2));
+    const result= linkList.checkLoops();
+    expect(result).toEqual(jasmine.objectContaining({
+      element: 2,
+    }));
+  });
+  it('loop same number in list', function() {
+    linkList.add(3);
+    linkList.add(3);
+    linkList.add(3);
     linkList.addNode(linkList.getInPosition(1));
     const result= linkList.checkLoops();
     expect(result).toEqual(jasmine.objectContaining({
-      element: 1,
+      element: 3,
     }));
   });
   it('No loop', function() {
