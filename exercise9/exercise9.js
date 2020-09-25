@@ -27,10 +27,13 @@ class LinkedList {
    * @param {Node} node type Node Class
    */
   addNode(node) {
+    if (this.checkLoops()) {
+      return null
+    }
     if (this.head == null) {
       this.head = node;
     } else {
-      let current=this.head;
+      let current = this.head;
       while (current.next) {
         current = current.next;
       }
@@ -60,15 +63,23 @@ class LinkedList {
    */
   checkLoops() {
     let fast = this.head;
-    let slow=this.head;
+    let slow = this.head;
     while (fast && slow && fast.next) {
-      slow=slow.next;
-      fast=fast.next.next;
-      if (slow===fast) {
-        return slow;
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow === fast) {
+        break
       }
     }
-    return null;
+    if (slow != fast)
+      return null;
+
+    slow = this.head;
+    while (slow != fast) {
+      slow = slow.next;
+      fast = fast.next;
+    }
+    return slow;
   }
   /**
    *
@@ -107,8 +118,9 @@ class LinkedList {
 // linkList.add(1);
 // linkList.add(2);
 // linkList.add(3);
-// linkList.add(4);
-// // linkList.addNode(linkList.getInPosition(2))
-// linkList.printList();
+// // linkList.add(4);
+// linkList.add(5);
+// linkList.addNode(linkList.getInPosition(3))
+// // // linkList.printList();
 // console.log(linkList.checkLoops());
-module.exports=LinkedList;
+module.exports = LinkedList;
