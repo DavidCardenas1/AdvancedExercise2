@@ -44,7 +44,6 @@ class LinkedList {
        * @return {Boolean}
        */
     isPalindrome() {
-        const stack = [];
         let slow = this.head;
         let fast= this.head;
         let startAfterMiddle;
@@ -52,29 +51,23 @@ class LinkedList {
         while (true) {
             fast=fast.next.next;
             if (fast===null) {
-                startAfterMiddle=slow.next;
+                startAfterMiddle=slow.next;                
                 break
             }
             if (fast.next===null) {
                 startAfterMiddle=slow.next.next;
                 break
-            }
-            
+            }            
             slow=slow.next;
         }
-        // console.log(startAfterMiddle);
         while (startAfterMiddle) {
-            stack.push(startAfterMiddle.element)
-            startAfterMiddle=startAfterMiddle.next;
-        }
-        while (stack.length>0) {
-            const top= stack.pop()
-            if (current.element!==top) {
+            if (current.element!==startAfterMiddle.element) {
                 return false
             }
             current=current.next;
+            startAfterMiddle=startAfterMiddle.next;
         }
-        return stack.length===0?true:false;
+        return true
     }
     /**
        * @return {Node}
