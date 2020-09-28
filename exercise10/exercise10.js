@@ -48,6 +48,9 @@ class LinkedList {
     let slow = this.head;
     let fast= this.head;
     let startAfterMiddle;
+    if (!slow) {
+        return false
+    }
     if (!slow.next) {
         return true
     }

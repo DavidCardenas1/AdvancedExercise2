@@ -77,4 +77,13 @@ describe('exercise 10', function() {
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
+  it('length 0', function() {
+    const word='';
+    for (let idx = 0; idx < word.length; idx++) {
+      const element = word[idx];
+      linkList.add(element);
+    }
+    const result=linkList.isPalindrome();
+    expect(result).toBe(false);
+  });
 });
