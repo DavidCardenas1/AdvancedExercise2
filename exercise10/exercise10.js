@@ -48,6 +48,9 @@ class LinkedList {
     let slow = this.head;
     let fast= this.head;
     let startAfterMiddle;
+    if (!slow.next) {
+        return true
+    }
     stack.push(this.head.element);
     while (true) {
       fast=fast.next.next;
@@ -69,7 +72,7 @@ class LinkedList {
       }
       startAfterMiddle=startAfterMiddle.next;
     }
-    return stack.length===0
+    return true
   }
   /**
        * @return {Node}
