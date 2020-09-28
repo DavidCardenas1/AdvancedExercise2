@@ -69,7 +69,7 @@ class LinkedList {
       }
       startAfterMiddle=startAfterMiddle.next;
     }
-    return stack.length===0?true:false;
+    return stack.length===0
   }
   /**
        * @return {Node}

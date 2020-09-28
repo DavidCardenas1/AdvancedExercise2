@@ -68,4 +68,13 @@ describe('exercise 10', function() {
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
+  it(' Palindrome odd in middle in rear odd', function() {
+    const word='rrreeerrr';
+    for (let idx = 0; idx < word.length; idx++) {
+      const element = word[idx];
+      linkList.add(element);
+    }
+    const result=linkList.isPalindrome();
+    expect(result).toBe(true);
+  });
 });
