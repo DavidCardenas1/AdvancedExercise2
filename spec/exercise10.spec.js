@@ -43,4 +43,21 @@ describe('exercise 10', function() {
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
+  it(' Palindrome length 3 (odd) same number', function() {
+    linkList.add(1);
+    linkList.add(1);
+    linkList.add(1);
+    const result=linkList.isPalindrome();
+    expect(result).toBe(true);
+  })
+  it(' Palindrome length (odd) different middle', function() {
+    const word='rrerr';
+    for (let idx = 0; idx < word.length; idx++) {
+      const element = word[idx];
+      linkList.add(element);
+    }
+    const result=linkList.isPalindrome();
+    expect(result).toBe(true);
+  })
+ 
 });

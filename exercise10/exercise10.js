@@ -2,116 +2,133 @@
  * Class Node
  */
 class Node {
-  /**
-       *
-       * @param {String} element
-       */
-  constructor(element) {
-    this.element = element;
-    this.next = null;
-  }
+    /**
+         *
+         * @param {String} element
+         */
+    constructor(element) {
+        this.element = element;
+        this.next = null;
+    }
 }
 /**
  * Class Linked List
  */
 class LinkedList {
-  /**
-       * constructor
+    /**
+         * constructor
+         */
+    constructor() {
+        this.head = null;
+        // this.size = 0;
+    }
+    /**
+       * add a New NODE
+       * @param {String} element
        */
-  constructor() {
-    this.head = null;
-    // this.size = 0;
-  }
-  /**
-     * add a New NODE
-     * @param {String} element
-     */
-  add(element) {
-    const newNode = new Node(element);
-    let current;
-    if (this.head == null) {
-      this.head = newNode;
-    } else {
-      current = this.head;
-      while (current.next) {
-        current = current.next;
-      }
-      current.next = newNode;
-    }
-    // this.size++;
-  }
-  /**
-     * @return {Boolean}
-     */
-  isPalindrome() {
-    const stack=[];
-    let current=this.head;
-    while (current) {
-      const top=stack[stack.length-1];
-      const preTop=stack[stack.length-2];
-      //   console.log(current.element,top);
-      if ((top&&current.element===top)||(preTop&&current.element===preTop)) {
-        if (preTop&&current.element===preTop) {
-          stack.pop();
+    add(element) {
+        const newNode = new Node(element);
+        let current;
+        if (this.head == null) {
+            this.head = newNode;
+        } else {
+            current = this.head;
+            while (current.next) {
+                current = current.next;
+            }
+            current.next = newNode;
         }
-        stack.pop();
-        current=current.next;
-        continue;
-      }
-      stack.push(current.element);
-      current=current.next;
+        // this.size++;
     }
-    return stack.length===0?true:false;
-  }
-  /**
-     * @return {Node}
-     */
-  getSize() {
-    let curr = this.head;
-    let size = 0;
-    while (curr) {
-      curr = curr.next;
-      size++;
+    /**
+       * @return {Boolean}
+       */
+    isPalindrome() {
+        const stack = [];
+        let slow = this.head;
+        let fast= this.head;
+        let startAfterMiddle;
+        let current=this.head;
+        while (true) {
+            fast=fast.next.next;
+            if (fast===null) {
+                startAfterMiddle=slow.next;
+                break
+            }
+            if (fast.next===null) {
+                startAfterMiddle=slow.next.next;
+                break
+            }
+            
+            slow=slow.next;
+        }
+        // console.log(startAfterMiddle);
+        while (startAfterMiddle) {
+            stack.push(startAfterMiddle.element)
+            startAfterMiddle=startAfterMiddle.next;
+        }
+        while (stack.length>0) {
+            const top= stack.pop()
+            if (current.element!==top) {
+                return false
+            }
+            current=current.next;
+        }
+        return stack.length===0?true:false;
     }
-    return size;
-  }
-  /**
-     *
-     * @param {Number} index
-     * @return {Node} the node in that index
-     */
-  getInPosition(index) {
-    let curr = this.head;
-    let it = 0;
-    while (it < index) {
-      it++;
-      curr = curr.next;
+    /**
+       * @return {Node}
+       */
+    getSize() {
+        let curr = this.head;
+        let size = 0;
+        while (curr) {
+            curr = curr.next;
+            size++;
+        }
+        return size;
     }
+    /**
+       *
+       * @param {Number} index
+       * @return {Node} the node in that index
+       */
+    getInPosition(index) {
+        let curr = this.head;
+        let it = 0;
+        while (it < index) {
+            it++;
+            curr = curr.next;
+        }
 
-    return curr;
-  }
-  /**
-     * print list in per node
-     */
-  printList() {
-    let curr = this.head;
-    let str = '';
-    while (curr) {
-      str += curr.element + ' ';
-      console.log(str);
-      curr = curr.next;
+        return curr;
     }
-    // console.log(str);
-  }
+    /**
+       * print list in per node
+       */
+    printList() {
+        let curr = this.head;
+        let str = '';
+        while (curr) {
+            str += curr.element + ' ';
+            console.log(str);
+            curr = curr.next;
+        }
+        // console.log(str);
+    }
 }
 
 
-const linkList = new LinkedList();
-const word = 'ra';
-for (let idx = 0; idx < word.length; idx++) {
-  const element = word[idx];
-  linkList.add(element);
-}
-console.log(linkList.isPalindrome());
+// const linkList = new LinkedList();
+// const word = 'wow';
+// for (let idx = 0; idx < word.length; idx++) {
+//   const element = word[idx];
+//   linkList.add(element);
+// }
+
+// // linkList.add(1);
+// // linkList.add(1);
+// // linkList.add(1);
+// console.log(linkList.isPalindrome());
 // ///rracecarr
 module.exports = LinkedList;
