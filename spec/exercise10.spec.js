@@ -49,7 +49,7 @@ describe('exercise 10', function() {
     linkList.add(1);
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
-  })
+  });
   it(' Palindrome length (odd) different middle', function() {
     const word='rrerr';
     for (let idx = 0; idx < word.length; idx++) {
@@ -58,6 +58,14 @@ describe('exercise 10', function() {
     }
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
-  })
- 
+  });
+  it(' Palindrome even in middle in rear odd', function() {
+    const word='rrriirrr';
+    for (let idx = 0; idx < word.length; idx++) {
+      const element = word[idx];
+      linkList.add(element);
+    }
+    const result=linkList.isPalindrome();
+    expect(result).toBe(true);
+  });
 });
