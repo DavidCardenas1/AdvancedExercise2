@@ -8,38 +8,28 @@ describe('exercise 10', function() {
     linkList = null;
   });
   it('no Palindrome length 2 (even)', function() {
-    const word='no';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('n');
+    linkList.add('o');
     const result=linkList.isPalindrome();
     expect(result).toBe(false);
   });
   it(' Palindrome length 2 (even)', function() {
-    const word='nn';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('n');
+    linkList.add('n');
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
   it('NO Palindrome length 3 (odd)', function() {
-    const word='nfl';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('n');
+    linkList.add('f');
+    linkList.add('l');
     const result=linkList.isPalindrome();
     expect(result).toBe(false);
   });
   it(' Palindrome length 3 (odd)', function() {
-    const word='wow';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('w');
+    linkList.add('o');
+    linkList.add('w');
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
@@ -51,38 +41,32 @@ describe('exercise 10', function() {
     expect(result).toBe(true);
   });
   it(' Palindrome length (odd) different middle', function() {
-    const word='rrerr';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('r');
+    linkList.add('r');
+    linkList.add('e');
+    linkList.add('r');
+    linkList.add('r');
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
   it(' Palindrome even in middle in rear odd', function() {
-    const word='rrriirrr';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('r');
+    linkList.add('r');
+    linkList.add('r');
+    linkList.add('w');
+    linkList.add('w');
+    linkList.add('r');
+    linkList.add('r');
+    linkList.add('r');
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
   it('length 1', function() {
-    const word='r';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+    linkList.add('w');
     const result=linkList.isPalindrome();
     expect(result).toBe(true);
   });
-  it('length 0', function() {
-    const word='';
-    for (let idx = 0; idx < word.length; idx++) {
-      const element = word[idx];
-      linkList.add(element);
-    }
+  it('length 0', function() {    
     const result=linkList.isPalindrome();
     expect(result).toBe(false);
   });
