@@ -30,6 +30,11 @@ function set(obj, path, value) {
                 typeof currentObj[element] !== 'function') {
         throw new Error('Not object');
       }
+      if (currentObj[element] instanceof Number
+        ||currentObj[element] instanceof Array
+        ||typeof currentObj[element] === 'function') {
+        currentObj[element] = {};
+      }
     }
     if (!currentObj[element]) {
       currentObj[element] = {};
@@ -43,4 +48,14 @@ function set(obj, path, value) {
 //     // a: []
 // }
 // set(obj, 'path', 42);
+console.log(typeof new Number(1));
+const obj = {a: {x:new Number(1)}};
+// const obj = {a: {x:new Array(1,2)}};
+set(obj, 'a.x.c.d', 42);
+console.log(JSON.stringify(obj));
 module.exports = set;
+/**
+ * Create any property that does not exist
+Throw an error if any path property exists but is not an object, function, or array
+
+ */
