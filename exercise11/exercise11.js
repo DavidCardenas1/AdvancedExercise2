@@ -10,11 +10,8 @@ function set(obj, path, value) {
   let currentObj = obj;
   for (let idx = 0; idx < paths.length; idx++) {
     const element = paths[idx];
-    if (idx === paths.length - 1) {
-      if (currentObj[element]) {
-            currentObj = currentObj[element];            
-      }
-     else currentObj[element] = value;
+    if (idx === paths.length - 1) {      
+     currentObj[element] = value;
       break
     }
     if (currentObj.hasOwnProperty(element)) {
@@ -25,7 +22,7 @@ function set(obj, path, value) {
       }
     }
     if (!currentObj[element]) {
-       currentObj[element] = {};
+      currentObj[element] = {};
     }
     currentObj = currentObj[element];
   }
@@ -47,4 +44,7 @@ function set(obj, path, value) {
 // const obj={a:new Number(1)}
 // obj.a.b=3
 // console.log(obj);
+// const obj = { a: { x: { y: 1 } } };
+// set(obj, 'a.x', 42);
+// console.log(obj.a.x);
 module.exports = set;
