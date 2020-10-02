@@ -10,9 +10,9 @@ function set(obj, path, value) {
   let currentObj = obj;
   for (let idx = 0; idx < paths.length; idx++) {
     const element = paths[idx];
-    if (idx === paths.length - 1) {        
+    if (idx === paths.length - 1) {
       if (currentObj[element]) {
-        const auxObj=currentObj[element];
+        const auxObj = currentObj[element];
         for (const key in auxObj) {
           if (auxObj.hasOwnProperty(key)) {
             currentObj = currentObj[element];
@@ -20,33 +20,26 @@ function set(obj, path, value) {
           }
         }
       }
-      if (!currentObj[element]||currentObj[element]) {
-          currentObj[element] = value;
-        break;
-      }
+      currentObj[element] = value;
+      break;
     }
-    if (currentObj[element]) {        
-      if (typeof currentObj[element] !== 'object'&&
-                typeof currentObj[element] !== 'function'
-                ) {
+    if (currentObj.hasOwnProperty(element)) {
+      if (typeof currentObj[element] !== 'object' &&
+        typeof currentObj[element] !== 'function'
+      ) {
         throw new Error('Not object');
-      }
-      if (currentObj[element] instanceof Number) {
-        currentObj[element] = {};
       }
     }
     if (!currentObj[element]) {
-        if (typeof currentObj[element]==='boolean') {
-            throw new Error('Not object');
-        }        
-      currentObj[element] = {};
+       currentObj[element] = {};
     }
     currentObj = currentObj[element];
   }
   return obj;
 }
 
-// const obj = {a: {x: false}};
+// const obj = {a:  {x:new Number(1)}};
+// console.log( obj.hasOwnProperty('a'))
 // set(obj, 'a.x.c.d', 42);
 // const obj={a:  function value(){}}
 // const obj = {
@@ -57,4 +50,7 @@ function set(obj, path, value) {
 // console.log(JSON.stringify(obj));
 //  { a: {myarr: [{value: 123}]}}
 
+// const obj={a:new Number(1)}
+// obj.a.b=3
+// console.log(obj);
 module.exports = set;

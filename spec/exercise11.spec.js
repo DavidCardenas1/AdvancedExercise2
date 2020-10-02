@@ -43,9 +43,7 @@ describe('exercise 11', function() {
   it('obj with instance', function() {
     const obj = {a: {x:new Number(1)}};
     const result=set(obj, 'a.x.c.d', 42);
-    expect(result).toEqual(jasmine.objectContaining({
-     a:{x:{c:{d:42}}}
-    }));
+    expect(result.a.x.c.d).toEqual(42);
   });
 
   it('obj with function', function() {
