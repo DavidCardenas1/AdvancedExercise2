@@ -67,15 +67,15 @@ describe('exercise 11', function() {
         },
       },
     };
-    const result=set(obj, 'path.to', 42);
+    const result=set(obj, 'path.be', 42);
     expect(result).toEqual(jasmine.objectContaining({
       path: {
         to: {
           a: {
             b: {},
           },
-          to: 42,
         },
+        be:42
       },
     }));
   });

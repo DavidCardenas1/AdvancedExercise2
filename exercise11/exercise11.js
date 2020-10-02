@@ -12,16 +12,10 @@ function set(obj, path, value) {
     const element = paths[idx];
     if (idx === paths.length - 1) {
       if (currentObj[element]) {
-        const auxObj = currentObj[element];
-        for (const key in auxObj) {
-          if (auxObj.hasOwnProperty(key)) {
-            currentObj = currentObj[element];
-            break;
-          }
-        }
+            currentObj = currentObj[element];            
       }
-      currentObj[element] = value;
-      break;
+     else currentObj[element] = value;
+      break
     }
     if (currentObj.hasOwnProperty(element)) {
       if (typeof currentObj[element] !== 'object' &&
