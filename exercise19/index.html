@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/boot.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.js"></script>
+
+   </head>
+
+<body>
+    
+    <ul id="results"></ul>
+    <script src="nb-test.js"></script>
+    
+    
+    <script type="module">
+        assert(true, "Outside and before the test block");
+
+        test("TestBlock A", function () {
+            assert(true, "Inside TestBlock A");
+            setTimeout(() => assert(true, "test delayed A"), 1000);
+        });
+        assert(true, "Outside and after the TestBlock A");
+        test("TestBlock B", function () {
+            assert(true, "Inside TestBlock B");
+            setTimeout(assert, 500, true, "test delayed B");
+        });
+        assert(true, "Outside and after TestBlock B");
+    </script>
+
+<script type="text/javascript" src="../spec/exercise19.spec.js"></script> 
+</body>
+
+</html>
