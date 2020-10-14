@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unit test exercise20</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/boot.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.js"></script>
+
+</head>
+<style>
+    #container {
+        width: 160px;
+        height: 160px;
+        transform: skew(25deg) translateX(-25%);
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    #t1 {
+
+        height: 80px;
+        background: linear-gradient(135deg, rgb(255, 255, 255) 50%, transparent 0);
+        background-color: #000;
+        flex: 1;
+        /* transform:  translateY(50%); */
+
+    }
+
+    .wraper {
+        /* height: 160px; */
+        display: flex;
+        flex-wrap: wrap-reverse;
+        justify-content: flex-end;
+        border-style: none
+    }
+
+
+    .triangles {
+        /* width: 80px; */
+        background: linear-gradient(135deg, rgb(255, 255, 255) 50%, transparent 0);
+        background-color: #000;
+        border-style: none
+    }
+</style>
+
+<body>
+    
+    <div>
+        <label>Number of triangles</label>
+        <input type="number" name="" id="numTri" max="7" min="1" value="1">
+        <div id="container">
+            <div id="t1">
+            </div>
+        </div>
+    </div>
+   
+    <script src="./exercise20.js"></script>
+    <div id="test">
+
+        <script type="text/javascript" src="../spec/exercise20.spec.js"></script>
+    </div>
+</body>
+
+
+</html>
