@@ -1,46 +1,48 @@
 describe('exercise 20', function() {
-  const t1 = document.getElementById('t1');
-  beforeEach(()=>{
-    t1.textContent = '';
+  const container = document.getElementById('container').children[0];
+  beforeEach(() => {
+    reset();
   });
-  afterEach(()=>{
-    t1.textContent = '';
+  afterEach(() => {
+    reset();
   });
-  it('test 2 triangle className', function() {
-    const triangle = document.createElement('div');
-    const result = deep(triangle, 1, 2);
-    expect(result.className).toBe('wraper');
-    expect(result.children[0].className).toBe('triangles');
+  it('test 1 triangle child', function() {
+    drawTriangles(1);
+    const [result] = container.cloneNode(true).children;
+    expect(result.children.length).toBe(1);
   });
-  it('test 2 triangle lenght childs', function() {
-    const triangle = document.createElement('div');
-    const result = deep(triangle, 1, 2);
-    expect(result.children.length).toBe(3);
+  it('test 1 triangle child className', function() {
+    drawTriangles(1);
+    const [result] = container.cloneNode(true).children;
+    expect(result.className).toBe('row');
+    expect(result.children[0].className).toBe('triangle');
   });
-  it('test 2 triangle size children', function() {
-    const container = document.getElementById('container');
-    t1.appendChild(deep(t1, 1, 2));
-    document.body.append(container);
-    const wraper= getComputedStyle(t1.children[0]);
-    const triangle= getComputedStyle(t1.children[0].children[0]);
-    expect(wraper.height).toBe('160px');
-    expect(triangle.width).toBe('80px');
+  it('test 1 triangle size', function() {
+    drawTriangles(1);
+    const [result] = container.cloneNode(true).children;
+    expect(result.children.length).toBe(1);
+    const size = getComputedStyle(document.documentElement)
+        .getPropertyValue('--size');
+    expect(size).toBe('160px');
   });
-  it('test 3 triangle lenght childs', function() {
-    const triangle = document.createElement('div');
-    const result = deep(triangle, 1, 3);
-    expect(result.children[0].children[0].children.length).toBe(3);
-    expect(result.children[1].children[0].children.length).toBe(3);
-    expect(result.children[2].children[0].children.length).toBe(3);
+  it('test 2 triangle children', function() {
+    drawTriangles(2);
+    const [result] = container.cloneNode(true).children;
+    expect(result.children[0].children.length).toBe(1);
+    expect(result.children[1].children.length).toBe(2);
   });
-  it('test 3 triangle size children', function() {
-    const container = document.getElementById('container');
-    t1.appendChild(deep(t1, 1, 3));
-    document.body.append(container);
-    const wraper= getComputedStyle(t1.children[0].children[0]);
-    const triangle= getComputedStyle(t1.children[0].
-        children[0].children[0].children[0]);
-    expect(wraper.height).toBe('80px');
-    expect(triangle.width).toBe('40px');
+  it('test 2 triangle children className', function() {
+    drawTriangles(2);
+    const [result] = container.cloneNode(true).children;
+    expect(result.children[0].children[0].className).toBe('row');
+    expect(result.children[0].children[0].
+        children[0].className).toBe('triangle');
+  });
+  it('test 2 triangle children size', function() {
+    drawTriangles(2);
+    container.cloneNode(true).children;
+    const size = getComputedStyle(document.documentElement)
+        .getPropertyValue('--size');
+    expect(size).toBe('80px');
   });
 });

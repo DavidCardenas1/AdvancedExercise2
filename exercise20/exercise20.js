@@ -1,63 +1,55 @@
-
-const container = document.getElementById('container');
-const t1 = document.getElementById('t1');
+const container = document.getElementById('container').children[0];
 document.getElementById('numTri').addEventListener('input', draw);
+/**
+ *
+ */
+function reset() {
+  document.documentElement.style
+      .setProperty('--size', `160px`);
+  container.textContent = '';
+  const row = document.createElement('div');
+  row.className = 'row';
+
+  const triangle = document.createElement('div');
+  triangle.className='triangle';
+  row.appendChild(triangle);
+  container.appendChild(row);
+}
+/**
+ *
+ * @param {Number} total
+ */
+function drawTriangles(total) {
+  count=1;
+  while (count < total) {
+    count++;
+    const size = getComputedStyle(document.documentElement)
+        .getPropertyValue('--size');
+    document.documentElement.style
+        .setProperty('--size', `${parseInt(size) / 2}px`);
+
+    const block = document.createElement('div');
+    const row1 = document.createElement('div');
+    row1.className = 'row';
+    const row2 = document.createElement('div');
+    row2.className = 'row';
+    row1.append(container.children[0].cloneNode(true));
+    row2.append(container.children[0].cloneNode(true));
+    row2.append(container.children[0].cloneNode(true));
+
+    block.appendChild(row1);
+    block.appendChild(row2);
+    container.textContent = '';
+    container.appendChild(block);
+  }
+}
 /**
  *
  */
 function draw() {
   const num = parseInt(document.getElementById('numTri').value);
-  t1.textContent = '';
-  if (num > 1) {
-    t1.appendChild(deep(t1, 1, num));
-  }
-  document.body.append(container);
-}
-/**
- *
- * @param {HTMLElement} currentNode
- * @param {Number} count
- * @param {Number} num
- * @return {HTMLElement}
- */
-function deep(currentNode, count, num) {
-  if (num===1||num>7) {
-    return;
-  }
-  if (currentNode.children.length === 0) {
-    const {width} = getComputedStyle(currentNode);
-    currentNode.appendChild(wrapper(width));
-    count++;
-    currentNode = currentNode.lastChild;
-  }
-  if (count < num) {
-    for (const iterator of currentNode.children) {
-      deep(iterator, count, num);
-    }
-  }
-  return currentNode;
-}
-/**
- *
- * @param {string} heightpx
- * @return {HTMLElement}
- */
-function wrapper(heightpx) {
-  const wraper = document.createElement('div');
-  wraper.style['height'] = heightpx;
-  wraper.className = 'wraper';
-
-  const tri = document.createElement('div');
-  tri.style.width = `${parseInt(heightpx) / 2}px`;
-  tri.className = 'triangles';
-
-
-  for (let idx = 0; idx < 3; idx++) {
-    const newClone = tri.cloneNode(true);
-    wraper.appendChild(newClone);
-  }
-
-  return wraper;
+  reset();
+  drawTriangles(num);
 }
 
 
