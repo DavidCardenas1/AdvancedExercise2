@@ -75,6 +75,6 @@ class LoadingBar {
     return str;
   }
 }
-const ld = new LoadingBar(50);
-ld.start();
+// const ld = new LoadingBar(50);
+// ld.start();
 module.exports = LoadingBar;
