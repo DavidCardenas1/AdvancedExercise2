@@ -23,20 +23,24 @@ const { gql } = require('apollo-server-express')
         email:String,
         moviesWatched:[MovieWatched]
     }
-
+    type Report{
+        path:String
+    }
     type Query{
         allUsers:[User]
         Login(email:String!,password:String!):User,
         userHistory(email:String!):UserHistory,
-        findMovie(movieName:String!):Movie
-        allMovies:[Movie]
+        findMovie(movieName:String!):Movie,
+        allMovies:[Movie],
+        createReport(email:String!):Report
     }
+    
 
     type Mutation{
         createUser(name: String!,email:String!,password:String!,password2:String!):User,
         addMovie(movieName:String!,genre:String,productionCompany:String):Movie,
         movieWatched(email:String!,movieName:String!):MovieWatched,
-        evaluateMovie(email:String!,movieName:String!,evaluation:Float!):MovieWatched
+        evaluateMovie(email:String!,movieName:String!,evaluation:Float!):MovieWatched,
 
     }
 `;

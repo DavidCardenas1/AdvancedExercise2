@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <mate charest="utf-8" />
+        <title>User History</title>
+    </head>
+    <body>
+        <h1>User History</h1>
+        <ul>
+            {{#each moviesWatched}}
+            <li>Movie Name: {{{movieName}}}</li>
+            <li>User Evaluation: {{this.evaluation}}</li>
+            <br>
+        {{/each}}
+        </ul>
+    </body>
+</html>
