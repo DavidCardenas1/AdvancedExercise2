@@ -1,22 +1,25 @@
 
-const { addMovie, allMovies, findMovie, movieWatched, evaluateMovie } = require("./movieResolvers");
-const { allUsers, Login, createUser, userHistory } = require("./usersResolvers")
-const createReport =require('./reportResolver')
+const {  getMovieEvaluation, addMovieWatched,
+     evaluateMovie,getToWatchList,addToWatchList,getMoviesWatched,
+     removeFromToWatchList} = require("./movieResolvers");
+const {  login, register } = require("./usersResolvers")
+const createReport = require('./reportResolver')
+
 
 const resolvers = {
     Query: {
-        allUsers,
-        Login,
-        userHistory,
-        findMovie,
-        allMovies,
+        login,
+        getMovieEvaluation,
+        getToWatchList,
+        getMoviesWatched,
         createReport
     },
     Mutation: {
-        createUser,
-        addMovie,
-        movieWatched,
-        evaluateMovie
+        register,
+        addMovieWatched,
+        addToWatchList,
+        evaluateMovie,
+        removeFromToWatchList
     }
 }
 module.exports = resolvers;

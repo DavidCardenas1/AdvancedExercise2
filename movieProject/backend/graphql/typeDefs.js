@@ -6,41 +6,38 @@ const { gql } = require('apollo-server-express')
         email:String,
         password:String
     }
-    type Movie{
-        movieName:String
-        genre:String,
-        evaluation:Float,
-        productionCompany:String
 
-    }
-    type MovieWatched{
-        movieName:String,
+    type Movie{
+        movieId:String,
         email:String,
-        evaluation:Float
+        evaluation:String        
     }
     type UserHistory{
         name:String,
         email:String,
-        moviesWatched:[MovieWatched]
+        moviesWatched:[Movie]
     }
     type Report{
         path:String
     }
+
+    # example out
     type Query{
-        allUsers:[User]
-        Login(email:String!,password:String!):User,
-        userHistory(email:String!):UserHistory,
-        findMovie(movieName:String!):Movie,
-        allMovies:[Movie],
+        
+        login(email:String!,password:String!):User,        
+        getMovieEvaluation(movieId:String!):Movie,
+        getToWatchList(email:String):[Movie],
+        getMoviesWatched(email:String):[Movie],
         createReport(email:String!):Report
     }
     
 
     type Mutation{
-        createUser(name: String!,email:String!,password:String!,password2:String!):User,
-        addMovie(movieName:String!,genre:String,productionCompany:String):Movie,
-        movieWatched(email:String!,movieName:String!):MovieWatched,
-        evaluateMovie(email:String!,movieName:String!,evaluation:Float!):MovieWatched,
+        register(name: String!,email:String!,password:String!,password2:String!):User,        
+        addMovieWatched(email:String!,movieId:String!):Movie,
+        addToWatchList(email:String,movieId:String):Movie,
+        evaluateMovie(email:String!,movieId:String!,evaluation:Float!):Movie,
+        removeFromToWatchList(email:String):Movie
 
     }
 `;

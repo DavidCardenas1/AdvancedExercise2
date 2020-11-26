@@ -1,119 +1,213 @@
-const Users = require('../dbModel/users')
-const Movies = require('../dbModel/movies')
-const UserMovie = require('../dbModel/userMovies')
-const logger= require('../utils/logger')
+const logger = require('../utils/logger')
+const oracledb = require('oracledb');
+const createPool = require('../connectionDB')
 
-const addMovie = (_, args) => {
+
+
+const addMovieWatched = async (_, args) => {
     try {
-        const { movieName, genre, productionCompany } = args;
-        const startEvaluation = 5
+        const { email, movieId } = args;
+        await createPool()
+        let sql = 'BEGIN p_movieswatched(:email,:movieName); END;';
+        let binds = [
 
-        const movie = new Movies({ movieName, genre, productionCompany, evaluation: startEvaluation })
-        return movie.save()
-    } catch (err) {
-        throw new Error(err)
-    }
-}
-const movieWatched = (_, args) => {
-    try {
-        const { email, movieName } = args;
-        let { evaluation } = args
-        return Users.findOne({ email }).then(user => {
+            email,
+            movieId
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
 
-            if (user) {
-                return Movies.findOne({ movieName }).then(movie => {
-                    if (movie) {
-                        return UserMovie.findOne({ email, movieName }).then(result => {
-                            if (!result) {
-                                if (!evaluation) {
-                                    evaluation = null
-                                }
-                                const movieWatched = new UserMovie({ email, movieName, evaluation: null })
-                                logger.info(`${email} watched ${movieName}`);
-                                return movieWatched.save()
-                            } else {
-                                throw new Error("already saved")
-                            }
-                        })
-
-                    } else
-                        throw new Error("not movie or user")
-                })
-            } else
-                throw new Error("not  user")
-        })
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            logger.info(`${email} watched ${movieName} `);
+            return {
+                movieId
+            }
+        }
 
     } catch (error) {
         throw new Error(error)
     }
 }
-const evaluateMovie = (_, args) => {
+const evaluateMovie = async (_, args) => {
     try {
-        const { email, movieName, evaluation } = args;
-        return UserMovie.findOne({ email, movieName }).then(movie => {
-            if (movie) {
-                movie.evaluation = evaluation
-                logger.info(`${email} evaluate ${movieName} with ${evaluation}`);
-                return movie
+        const { email, movieId, evaluation } = args;
+        await createPool()
+        let sql = 'BEGIN P_movie_evaluation (:email,:movieId,:evaluation); END;';
+        let binds = [
+
+            email,
+            movieId,
+            evaluation
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            logger.info(`${email} evaluate ${movieName} with ${evaluation}`);
+            return {
+                movieId,
+                email,
+                evaluation
             }
-        })
+        }
+    } catch (error) {
+        throw new Error(error)
+
+    }
+}
+const getMovieEvaluation = async (_, args) => {
+    try {
+        const { movieId } = args;
+        await createPool()
+        let sql = 'BEGIN P_get_movie_evaluation (:movieId); END;';
+        let binds = [
+            movieId
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            let [[[eval]]] = result.implicitResults
+
+            return {
+                movieId,
+                evaluation: eval
+            }
+        }
 
     } catch (error) {
-
+        throw new Error(error)
     }
+
 }
-const findMovie = async (_, args) => {
-    const { movieName } = args;
-    const allUsersMovies = await UserMovie.find({ movieName }).then(result => {
+
+const addToWatchList = async (_, args) => {
+    try {
+        const { email, movieId } = args;
+        await createPool()
+        let sql = 'BEGIN P_towatch (:email,:movieId); END;';
+        let binds = [
+
+            email,
+            movieId
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+
+        await conn.commit()
+        await conn.close();
         if (result) {
-            return result
+            console.log(result);
+            logger.info(`${email} add to watch list, movie: ${movieId} `);
+            return {
+                email,
+                movieId
+            }
         }
-    })
-    let count = 0
-    let sum = 0
-    let avg = 5
-    allUsersMovies.forEach(movie => {
-        if (movie.evaluation) {
-            count++;
-            sum = sum + movie.evaluation
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+const removeFromToWatchList = async (_, args) => {
+    const { email, movieId } = args;
+    try {
+        const { email, movieId } = args;
+        await createPool()
+        let sql = 'BEGIN P_delete_towatch (:email,:movieId); END;';
+        let binds = [
+
+            email,
+            movieId
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            logger.info(`${email} removed to watch list, movie: ${movieId} `);
+            return {
+                email,
+                movieId
+            }
         }
-    });
-    if (count > 0) {
-        avg = sum / count
+    } catch (err) {
+        throw new Error(error)
     }
 
-    return Movies.findOne({ movieName }).then(movie => {
-        if (movie) {
-            movie.evaluation = avg
-            movie.save();
-            return movie
+}
+const getToWatchList =async (_, args) => {
+    // const { email } = args;
+    try {
+        const { email } = args;
+        await createPool()
+        let sql = 'BEGIN P_get_towatch (:email); END;';
+        let binds = [
+            email
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            let [eval] = result.implicitResults
+            let res=eval.map(([data])=>{
+                return{
+                    movieId:data
+                }
+            })
+            console.log(res);
+            return res;
+            
         }
-    })
+    } catch (error) {
+        throw new Error(error)
+    }
 
 }
-const allMovies = () => {
-    return Movies.find().then(movie => {
-        if (movie) {
-            return movie
+const getMoviesWatched =async (_, args) => {
+    // const { email } = args;
+    try {
+        const { email } = args;
+        await createPool()
+        let sql = 'BEGIN P_get_movieswatched(:email); END;';
+        let binds = [
+            email
+        ]
+        const conn = await oracledb.getConnection();
+        let result = await conn.execute(sql, binds);
+
+        await conn.commit()
+        await conn.close();
+        if (result) {
+            let [eval] = result.implicitResults
+            let res=eval.map(([data])=>{
+                return{
+                    movieId:data
+                }
+            })
+            console.log(res);
+            return res;
+            
         }
-    })
-}
-const addToWatchList=(_,args)=>{
-    const{email,movieName}=args;
-    logger.info(`${email} add to watch list, movie: ${movieName} `);
-}
-const removeToWatchList=(_,args)=>{
-    const{email,movieName}=args;
-    logger.info(`${email} removed to watch list, movie: ${movieName} `);
-}
-const seeToWatchList=(_,args)=>{
-    const{email}=args;
+    } catch (error) {
+        throw new Error(error)
+    }
+
 }
 module.exports = {
-    addMovie,
-    movieWatched,
+    addMovieWatched,
     evaluateMovie,
-    findMovie,
-    allMovies
+    getMovieEvaluation,
+    getToWatchList,
+    addToWatchList,
+    getMoviesWatched,
+    removeFromToWatchList
 
 }

@@ -12,6 +12,7 @@
     "apollo-server-express": "^2.18.2",
     "bcryptjs": "^2.4.3",
     "mongoose": "^5.10.9",
+    "oracledb": "^5.0.0",
     "pdf-creator-node": "^1.4.1",
     "validator": "^13.1.17",
     "winston": "^3.3.3"

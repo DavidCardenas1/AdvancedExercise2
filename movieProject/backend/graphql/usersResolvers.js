@@ -1,36 +1,61 @@
-const Users = require('../dbModel/users')
-const UserMovie = require('../dbModel/userMovies')
-const validateRegisterInputs = require('../validation/register')
-const logger= require('../utils/logger')
 
-const allUsers = () => {
-    return Users.find({}).then(users => {
-        return users
-    })
-}
-const Login = (_, args) => {
-    return Users.findOne({ email: args.email }).then(user => {
-        if (user) {
-            return user.comparePassword(args.password).then(res => {
-                if (res) {
-                    logger.info(`${res.email} logged`);
-                    return user
-                } else {
-                    throw new Error("credentials")
+const validateRegisterInputs = require('../validation/register')
+const logger = require('../utils/logger')
+const oracledb = require('oracledb');
+const createPool = require('../connectionDB')
+
+
+const login = async (_, args) => {
+    const { email, password } = args;
+    try {
+        await createPool();
+        let sql = 'BEGIN login (:email,:password); END;';
+            let binds = [
+                email,
+                password
+            ]
+            const conn = await oracledb.getConnection();
+            let result = await conn.execute(sql, binds);
+            // console.log(result);
+            await conn.close();
+            if (result) {
+                const [[[name]]]=result.implicitResults
+                console.log(name);
+                logger.info(`user ${email} logged in`);
+                return {
+                    email,
+                    name
                 }
-            })
-        } else
-            throw new Error("credentials")
-    })
+            }
+
+    } catch (error) {
+        throw new Error(error)
+    }
 }
-const createUser = (_, args) => {
+const register = async (_, args) => {
     const { name, email, password } = args;
     const error = validateRegisterInputs(args)
     if (!error) {
         try {
-            const user = new Users({ name, email, password })
-            logger.info(`user ${email} created`);
-            return user.save()
+            await createPool()
+            let sql = 'BEGIN register (:email,:password,:name); END;';
+            let binds = [
+                email,
+                password,
+                name
+            ]
+            const conn = await oracledb.getConnection();
+            let result = await conn.execute(sql, binds);
+            // console.log(result);
+            await conn.close();
+            if (result) {
+                logger.info(`user ${email} created`);
+                return {
+                    email,
+                    name
+                }
+            }
+
         } catch (err) {
             throw new Error(err)
         }
@@ -39,28 +64,9 @@ const createUser = (_, args) => {
     }
 }
 
-const userHistory =async (_, args) => {
-    try {
-        const { email } = args;
-        const moviesWatched =await UserMovie.find({ email }).then(result => {
-            if (result) {
-                return result
-            }
-        })
-        const name =await Users.findOne({ email }).then(result => {
-            if (result) {
-                return result.name
-            }
-        })
-        return { name, email, moviesWatched }
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-module.exports={
-    allUsers,
-    Login,
-    createUser,
-    userHistory
+
+module.exports = {
+    login,
+    register
 
 }
